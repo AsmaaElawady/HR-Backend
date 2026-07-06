@@ -3,8 +3,6 @@ import { config } from "../config/env";
 
 const isProduction = config.NODE_ENV === "production";
 
-// In production (serverless environments like Lambda/Render), the filesystem
-// is read-only so file transports will crash on startup. Use console only.
 const transports: winston.transport[] = [
     new winston.transports.Console({
         format: winston.format.combine(

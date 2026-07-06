@@ -1,7 +1,6 @@
 import path from "path";
 import swaggerJsdoc from "swagger-jsdoc";
 import { config } from "./env";
-console.log(path.join(__dirname, "../../api/v1/routes/*.ts"));
 
 const options: swaggerJsdoc.Options = {
     definition: {
@@ -12,6 +11,10 @@ const options: swaggerJsdoc.Options = {
             description: "API documentation for the HR Management System",
         },
         servers: [
+            {
+                url: "https://hr-backend-lake.vercel.app/api/v1",
+                description: "Production server",
+            },
             {
                 url: `http://localhost:${config.PORT}/api/v1`,
                 description: "Development server",
@@ -80,7 +83,6 @@ const options: swaggerJsdoc.Options = {
         },
         security: [{ bearerAuth: [] }],
     },
-    // point directly at the source files by absolute path
     apis: [
         path.join(__dirname, "../../api/v1/routes/auth.routes.ts"),
         path.join(__dirname, "../../api/v1/routes/employee.routes.ts"),

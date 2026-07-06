@@ -7,12 +7,11 @@ import { errorHandler } from "./shared/middleware/errorHandler";
 import { notFound } from "./shared/middleware/notFound";
 import httpLogger from "./shared/middleware/httpLogger";
 import { globalLimiter, authLimiter } from "./shared/middleware/rateLimiter";
-import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./shared/config/swagger";
+import swaggerRouter from "./shared/config/swaggerUi";
 
 const app: Application = express();
 
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api/docs", swaggerRouter);
 
 // Security & parsing
 app.use(helmet());
