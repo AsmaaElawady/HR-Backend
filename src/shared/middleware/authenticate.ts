@@ -23,7 +23,7 @@ export const authenticate = async (
         if (!user) return next(new AppError("User no longer exists", 401));
 
         // Attach to request — accessible via (req as any).user in controllers
-        (req as any).user = { userId: payload.userId, role: payload.role };
+        (req as any).user = { userId: payload.userId, role: payload.role, employeeId: payload.employeeId };
         next();
     } catch (err: any) {
         if (err.name === "JsonWebTokenError")

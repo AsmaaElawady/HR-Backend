@@ -10,6 +10,7 @@ import {
 } from "../validators/employee.validator";
 import { authenticate } from "../../../shared/middleware/authenticate";
 import { authorize } from "../../../shared/middleware/authorize";
+import upload from "../../../shared/middleware/upload";
 
 const router = Router();
 
@@ -82,7 +83,7 @@ router.get("/", validate(listEmployeesSchema), employeeController.getAllEmployee
  *       409:
  *         description: Email already exists
  */
-router.post("/", authorize("admin"), validate(createEmployeeSchema), employeeController.createEmployee);
+router.post("/", authorize("admin"), upload.single("photo"), validate(createEmployeeSchema), employeeController.createEmployee);
 
 /**
  * @swagger
@@ -107,7 +108,7 @@ router.get("/:id", validate(getEmployeeSchema), employeeController.getEmployee);
  * @swagger
  * /employees/{id}:
  *   patch:
- *     summary: Update an employee (admin or hr)
+ *     summary: Update an employee (admin, hr, or self)
  *     tags: [Employees]
  *     parameters:
  *       - in: path
@@ -125,7 +126,7 @@ router.get("/:id", validate(getEmployeeSchema), employeeController.getEmployee);
  *       404:
  *         description: Employee not found
  */
-router.patch("/:id", authorize("admin", "hr"), validate(updateEmployeeSchema), employeeController.updateEmployee);
+router.patch("/:id", authorize("admin", "hr", "employee"), validate(updateEmployeeSchema), employeeController.updateEmployee);
 
 /**
  * @swagger
@@ -146,6 +147,6 @@ router.patch("/:id", authorize("admin", "hr"), validate(updateEmployeeSchema), e
  */
 router.delete("/:id", authorize("admin"), validate(getEmployeeSchema), employeeController.deleteEmployee);
 
-router.patch("/:id/photo", authorize("admin", "hr"), employeeController.uploadPhoto);
+router.patch("/:id/photo", authorize("admin", "hr", "employee"), upload.single("photo"), employeeController.uploadPhoto);
 
 export default router;
