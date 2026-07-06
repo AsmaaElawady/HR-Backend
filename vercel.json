@@ -1,5 +1,5 @@
 {
-  "buildCommand": "tsc && tsc-alias",
+  "buildCommand": "npx tsc && npx tsc-alias",
   "functions": {
     "dist/app.js": {
       "maxDuration": 10
