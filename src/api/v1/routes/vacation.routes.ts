@@ -9,6 +9,9 @@ const router = Router();
 
 router.use(authenticate);
 
+router.get("/my", authorize("employee"), vacationController.getMyVacations);
+
+
 /**
  * @swagger
  * /vacations/stats:
@@ -51,7 +54,7 @@ router.get("/submitted", authorize("admin", "hr"), vacationController.getSubmitt
  *       400:
  *         description: Not enough vacation days or invalid dates
  */
-router.post("/", authorize("admin", "hr"), validate(createVacationSchema), vacationController.submitVacation);
+router.post("/", authorize("admin", "hr", "employee"), validate(createVacationSchema), vacationController.submitVacation);
 
 /**
  * @swagger

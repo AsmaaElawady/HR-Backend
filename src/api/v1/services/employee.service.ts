@@ -84,9 +84,9 @@ export const updateEmployee = async (id: string, data: UpdateEmployeeInput): Pro
     const updated = await Employee.findByIdAndUpdate(
         id,
         { ...data, ...(data.dateOfBirth && { dateOfBirth: new Date(data.dateOfBirth) }) },
-        //new: true => Return updated document, not old one
+        //returnDocument: "after" => Return updated document, not old one
         // runValidators: true => Apply schema validation on update
-        { new: true, runValidators: true }
+        { returnDocument: "after", runValidators: true }
     );
 
     if (!updated) {
@@ -108,7 +108,7 @@ export const updateProfilePhoto = async (id: string, url: string): Promise<IEmpl
     const employee = await Employee.findByIdAndUpdate(
         id,
         { profilePhoto: url },
-        { new: true }
+        { returnDocument: "after" }
     )
     if (!employee) {
         throw new AppError("Employee not found", 404);

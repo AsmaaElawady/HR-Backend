@@ -8,11 +8,18 @@ export const createEmployeeSchema = z.object({
     phone: z.string().min(7, "Phone must be at least 7 characters"),
     gender: z.enum(["male", "female"]),
     maritalStatus: z.enum(["single", "married", "divorced", "widowed"]),
-    availableVacationDays: z.number().int().min(0).optional(),
-    salary: z.number().positive("Salary must be a positive number"),
+    availableVacationDays: z.preprocess(
+      (val) => (val === "" || val === undefined) ? undefined : Number(val),
+      z.number().int().min(0).optional()
+    ),
+    salary: z.preprocess(
+      (val) => (val === "" || val === undefined) ? undefined : Number(val),
+      z.number().positive("Salary must be a positive number")
+    ),
     dateOfBirth: z.string().refine((val) => !isNaN(Date.parse(val)), {
       message: "Invalid date format",
     }),
+    profilePhoto: z.string().optional(),
   }),
 });
 
