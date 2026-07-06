@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import * as employeeService from "../services/employee.service";
 import * as httpStatusText from '../../../shared/utils/httpStatusText';
-import AppError from "@shared/utils/appError";
-import { uploadImage } from "@shared/utils/cloudinary";
+import AppError from "../../../shared/utils/appError";
+import { uploadImage } from "../../../shared/utils/cloudinary";
 
 
 export const createEmployee = async (req: Request, res: Response) => {

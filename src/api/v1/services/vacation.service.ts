@@ -3,9 +3,9 @@ import { Vacation } from "../../../shared/models/vacation.model";
 import { Employee } from "../../../shared/models/employee.model";
 import AppError from "../../../shared/utils/appError";
 import { CreateVacationInput } from "../validators/vacation.validator";
-import { notifyAdminsNewVacation, notifyEmployeeApproved, notifyEmployeeRejected } from "@sockets/vacation.events";
-import { approvedVacationEmail, rejectedVacationEmail } from "@shared/utils/emailTemplates";
-import sendEmail from "@shared/utils/sendEmail";
+import { notifyAdminsNewVacation, notifyEmployeeApproved, notifyEmployeeRejected } from "../../../sockets/vacation.events";
+import { approvedVacationEmail, rejectedVacationEmail } from "../../../shared/utils/emailTemplates";
+import sendEmail from "../../../shared/utils/sendEmail";
 
 
 export const submitVacation = async (data: CreateVacationInput, tokenEmployeeId?: string) => {

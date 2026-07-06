@@ -10,7 +10,7 @@ import {
 import sendEmail from "../../../shared/utils/sendEmail";
 import generatePassword from "../../../shared/utils/generatePassword";
 import { RegisterInput, LoginInput, ChangePasswordInput } from "../validators/auth.validator";
-import { welcomeEmail } from "@shared/utils/emailTemplates";
+import { welcomeEmail } from "../../../shared/utils/emailTemplates";
 
 
 export const register = async (data: RegisterInput, requestingRole: string) => {

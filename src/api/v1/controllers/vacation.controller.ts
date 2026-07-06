@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as vacationService from "../services/vacation.service";
 import * as httpStatusText from "../../../shared/utils/httpStatusText";
-import AppError from "@shared/utils/appError";
+import AppError from "../../../shared/utils/appError";
 
 export const submitVacation = async (req: Request, res: Response) => {
     const user = (req as any).user;
