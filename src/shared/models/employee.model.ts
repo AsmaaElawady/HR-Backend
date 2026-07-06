@@ -12,7 +12,6 @@ export interface IEmployee extends mongoose.Document {
     salary: number;
     dateOfBirth: Date;
     profilePhoto?: string;
-    // role: 'employee' | 'admin';
 }
 
 
@@ -63,12 +62,7 @@ const employeeSchema = new mongoose.Schema<IEmployee>({
     },
     profilePhoto:{
         type: String,
-    },
-    // role:{
-    //     type: String,
-    //     enum: ['employee', 'admin'],
-    //     default: 'employee'
-    // }
+    }
 },
     { timestamps: true }
 )

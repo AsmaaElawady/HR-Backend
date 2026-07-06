@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as authController from "../controllers/auth.controller";
 import { validate } from "../../../shared/middleware/validate";
-import { registerSchema, loginSchema, refreshSchema } from "../validators/auth.validator";
+import { registerSchema, loginSchema, refreshSchema, changePasswordSchema } from "../validators/auth.validator";
 import { authenticate } from "../../../shared/middleware/authenticate";
 import { authorize } from "../../../shared/middleware/authorize";
 
@@ -89,5 +89,7 @@ router.post(
  *         description: Not authenticated
  */
 router.get("/me", authenticate, authController.getMe);
+
+router.patch("/changePassword", authenticate, validate(changePasswordSchema), authController.changePassword);
 
 export default router;
