@@ -1,6 +1,26 @@
 import winston from "winston";
 import { config } from "../config/env";
 
+const isProduction = config.NODE_ENV === "production";
+
+// In production (serverless environments like Lambda/Render), the filesystem
+// is read-only so file transports will crash on startup. Use console only.
+const transports: winston.transport[] = [
+    new winston.transports.Console({
+        format: winston.format.combine(
+            winston.format.colorize(),
+            winston.format.simple()
+        ),
+    }),
+];
+
+if (!isProduction) {
+    transports.push(
+        new winston.transports.File({ filename: "logs/error.log", level: "error" }),
+        new winston.transports.File({ filename: "logs/combined.log" })
+    );
+}
+
 const logger = winston.createLogger({
     level: "info",
     format: winston.format.combine(
@@ -8,21 +28,7 @@ const logger = winston.createLogger({
         winston.format.errors({ stack: true }),
         winston.format.json()
     ),
-    transports: [
-        new winston.transports.File({ filename: "logs/error.log", level: "error" }),
-        new winston.transports.File({ filename: "logs/combined.log" }),
-    ],
+    transports,
 });
-
-if (config.NODE_ENV !== "production") {
-    logger.add(
-        new winston.transports.Console({
-            format: winston.format.combine(
-                winston.format.colorize(),
-                winston.format.simple()
-            ),
-        })
-    );
-}
 
 export default logger;
