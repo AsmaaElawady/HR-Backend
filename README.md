@@ -201,6 +201,7 @@ All endpoints are prefixed with `/api/v1`. Authentication uses a **Bearer token*
 | POST | `/auth/login` | Public | Login and receive access + refresh tokens |
 | POST | `/auth/refresh` | Public | Exchange a refresh token for a new access token |
 | GET | `/auth/me` | Any authenticated | Get the currently logged-in user's profile |
+| PATCH | `/auth/changePassword` | Any authenticated | Change the current user's password |
 
 ### Employees
 
