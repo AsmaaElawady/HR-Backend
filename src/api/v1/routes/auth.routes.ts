@@ -90,6 +90,34 @@ router.post(
  */
 router.get("/me", authenticate, authController.getMe);
 
+/**
+ * @swagger
+ * /auth/changePassword:
+ *   patch:
+ *     summary: Change the current user's password
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [currentPassword, newPassword]
+ *             properties:
+ *               currentPassword:
+ *                 type: string
+ *                 example: "OldPassword@123"
+ *               newPassword:
+ *                 type: string
+ *                 example: "NewPassword@456"
+ *     responses:
+ *       200:
+ *         description: Password changed successfully
+ *       400:
+ *         description: Current password is incorrect
+ *       401:
+ *         description: Not authenticated
+ */
 router.patch("/changePassword", authenticate, validate(changePasswordSchema), authController.changePassword);
 
 export default router;

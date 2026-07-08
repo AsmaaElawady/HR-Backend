@@ -147,6 +147,37 @@ router.patch("/:id", authorize("admin", "hr", "employee"), validate(updateEmploy
  */
 router.delete("/:id", authorize("admin"), validate(getEmployeeSchema), employeeController.deleteEmployee);
 
+/**
+ * @swagger
+ * /employees/{id}/photo:
+ *   patch:
+ *     summary: Upload or replace an employee's profile photo
+ *     tags: [Employees]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *         description: Employee ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required: [photo]
+ *             properties:
+ *               photo:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Photo uploaded and Cloudinary URL saved
+ *       400:
+ *         description: No file provided
+ *       404:
+ *         description: Employee not found
+ */
 router.patch("/:id/photo", authorize("admin", "hr", "employee"), upload.single("photo"), employeeController.uploadPhoto);
 
 export default router;

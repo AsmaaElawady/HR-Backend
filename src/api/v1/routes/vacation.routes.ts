@@ -9,6 +9,20 @@ const router = Router();
 
 router.use(authenticate);
 
+/**
+ * @swagger
+ * /vacations/my:
+ *   get:
+ *     summary: Get the current employee's own vacation requests
+ *     tags: [Vacations]
+ *     responses:
+ *       200:
+ *         description: List of the authenticated employee's vacation requests
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Not authorized (employee role required)
+ */
 router.get("/my", authorize("employee"), vacationController.getMyVacations);
 
 
