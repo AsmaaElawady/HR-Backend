@@ -1,11 +1,22 @@
 import mongoose from "mongoose"
 import { config } from "./env"
+
+let isConnected = false;
+
 export const connectDB = async (): Promise<void> => {
+    mongoose.set('strictQuery', true);
+    if (isConnected) {
+        return;
+    }
+    
     try {
-        await mongoose.connect(config.MONGO_URI);
-        console.log("MongoDB connected")
+        const db = await mongoose.connect(config.MONGO_URI, {
+            serverSelectionTimeoutMS: 5000,
+        });
+        
+        isConnected = db.connections[0].readyState === 1;
+        console.log("MongoDB connected");
     } catch (error) {
         console.error('MongoDB connection failed:', error);
-        process.exit(1);
     }
 }
