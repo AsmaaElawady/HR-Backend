@@ -43,14 +43,19 @@ export const submitVacation = async (data: CreateVacationInput, tokenEmployeeId?
         toDate: to,
     });
 
-    notifyAdminsNewVacation({
-        employeeName: employee.name,
-        employeeId: employee._id.toString(),
-        vacationId: vacation._id,
-        fromDate: from.toDateString(),
-        toDate: to.toDateString(),
-        requestedDays,
-    });
+    try {
+        notifyAdminsNewVacation({
+            employeeName: employee.name,
+            employeeId: employee._id.toString(),
+            vacationId: vacation._id,
+            fromDate: from.toDateString(),
+            toDate: to.toDateString(),
+            requestedDays,
+        });
+    } catch (error) {
+        console.warn("Socket notification skipped (Vercel environment)");
+    }
+
 
     return vacation;
 };
@@ -113,13 +118,18 @@ export const approveVacation = async (id: string) => {
 
         await session.commitTransaction();
 
-        notifyEmployeeApproved({
-            employeeId: vacation.employeeId.toString(),
-            vacationId: vacation._id,
-            fromDate: vacation.fromDate,
-            toDate: vacation.toDate,
-            days,
-        });
+        try {
+            notifyEmployeeApproved({
+                employeeId: vacation.employeeId.toString(),
+                vacationId: vacation._id,
+                fromDate: vacation.fromDate,
+                toDate: vacation.toDate,
+                days,
+            });
+        } catch (error) {
+            console.warn("Socket notification skipped (Vercel environment)");
+        }
+
 
         await sendEmail({
             to: employee.email,
@@ -159,12 +169,17 @@ export const rejectVacation = async (id: string) => {
         throw new AppError("Employee not found", 404);
     }
 
-    notifyEmployeeRejected({
-        employeeId: vacation.employeeId.toString(),
-        vacationId: vacation._id,
-        fromDate: vacation.fromDate,
-        toDate: vacation.toDate,
-    });
+    try {
+        notifyEmployeeRejected({
+            employeeId: vacation.employeeId.toString(),
+            vacationId: vacation._id,
+            fromDate: vacation.fromDate,
+            toDate: vacation.toDate,
+        });
+    } catch (error) {
+        console.warn("Socket notification skipped (Vercel environment)");
+    }
+
 
     await sendEmail({
         to: employee.email,
