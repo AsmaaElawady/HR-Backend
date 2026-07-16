@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as authService from "../services/auth.service";
 import * as httpStatusText from "../../../shared/utils/httpStatusText";
-import asyncHandler from "@shared/utils/asyncHandler";
+import asyncHandler from "../../../shared/utils/asyncHandler";
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
     const requestingRole = (req as any).user?.role ?? "admin";

@@ -3,7 +3,7 @@ import * as employeeService from "../services/employee.service";
 import * as httpStatusText from '../../../shared/utils/httpStatusText';
 import AppError from "../../../shared/utils/appError";
 import { uploadImage } from "../../../shared/utils/cloudinary";
-import asyncHandler from "@shared/utils/asyncHandler";
+import asyncHandler from "../../../shared/utils/asyncHandler";
 
 
 export const createEmployee = asyncHandler(async (req: Request, res: Response) => {
