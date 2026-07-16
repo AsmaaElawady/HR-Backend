@@ -8,6 +8,9 @@ import { notFound } from "./shared/middleware/notFound";
 import httpLogger from "./shared/middleware/httpLogger";
 import { globalLimiter, authLimiter } from "./shared/middleware/rateLimiter";
 import swaggerRouter from "./shared/config/swaggerUi";
+import { connectDB } from "./shared/config/db";
+
+connectDB();
 
 const app: Application = express();
 
